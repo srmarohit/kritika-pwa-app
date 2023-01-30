@@ -1,6 +1,8 @@
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useSpeechSynthesis } from "react-speech-kit";
+import SendIcon from "@mui/icons-material/Send";
 
 function Gift() {
   const [words, setWords] = useState("");
@@ -18,7 +20,7 @@ function Gift() {
   useEffect(() => {
     console.log("dd");
     setWords(
-      "When you will answer the question correctly , then you will get the Gift Dairymilk "
+      "When you will answer the question .. correctly . then you will get .. the Gift .. Dairymilk "
     );
   }, []);
 
@@ -27,11 +29,22 @@ function Gift() {
   }, [words]);
 
   return (
-    <div>
-      <button onClick={sayRule}>listen more</button>
-      <button onClick={() => navigate("/anstoquestion")}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      {/* <button onClick={sayRule}>listen more</button> */}
+      <Button
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={() => navigate("/anstoquestion")}
+      >
         Move the Question
-      </button>
+      </Button>
     </div>
   );
 }

@@ -75,12 +75,23 @@ export default function AnsweringGreet({
   }
 
   return (
-    <div>
-      <p>Microphone: {listening ? "on" : "off"}</p>
-      <button onClick={SpeechRecognition.startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
-      <p>{transcript}</p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+        padding: "10%",
+      }}
+    >
+      {/* <p>Microphone: {listening ? "on" : "off"}</p> */}
+      <img
+        src="https://media.tenor.com/w63dY06lsp8AAAAi/mic.gif"
+        onClick={SpeechRecognition.startListening}
+      />
+      {/* <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <button onClick={resetTranscript}>Reset</button> 
+      <p>{transcript}</p>*/}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import {
   list,
   listAll,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 
 export default function UploadFiles() {
@@ -15,6 +16,16 @@ export default function UploadFiles() {
 
   const imagesRef = ref(storage, `images/`);
 
+  function getRefToStorage(URL) {
+    const baseURL =
+      "https://firebasestorage.googleapis.com/v0/b/at-pro.appspot.com/o/";
+    let imagePath = URL.replace(baseURL, "");
+    const indexOfEndPath = imagePath.indexOf("?");
+    imagePath = imagePath.substring(0, indexOfEndPath);
+    imagePath = imagePath.replace("%2F", "/");
+    return imagePath;
+  }
+
   const uploadFile = (e) => {
     e.preventDefault();
     if (!file) return;
@@ -23,11 +34,30 @@ export default function UploadFiles() {
 
     const imgRef = ref(storage, "images/" + file.name + new Date().getTime());
     uploadBytes(imgRef, file)
-      .then(() => {
+      .then((snapshot) => {
         alert("uploaded successfully");
+        getDownloadURL(snapshot.ref).then((url) => {
+          setListOfImages((prev) => [...prev, url]);
+        });
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const deleteFile = (url) => {
+    let file_path = getRefToStorage(url);
+
+    const fileRef = ref(storage, file_path);
+
+    deleteObject(fileRef)
+      .then(() => {
+        alert("file deleted..");
+        let filtImgLinks = listOfImages.filter((imgLink) => imgLink != url);
+        setListOfImages(filtImgLinks);
+      })
+      .catch(() => {
+        alert("error occured while deleting file..");
       });
   };
 
@@ -60,7 +90,7 @@ export default function UploadFiles() {
           src={imgLink}
           width={200}
           height={150}
-          onClick={() => alert(imgLink)}
+          onClick={() => deleteFile(imgLink)}
         />
       ))}
     </div>
