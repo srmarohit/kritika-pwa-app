@@ -23,7 +23,7 @@ function Question() {
   const [n1, setN1] = useState(1.25);
   const [n2, setN2] = useState(3.5);
   const [ans, setAns] = useState();
-  const [score, setScore] = useState(4);
+  const [score, setScore] = useState(0);
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState();
 
